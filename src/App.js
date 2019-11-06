@@ -1,26 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './styles/styles.scss';
+import {Provider} from "react-redux";
+import configureStore from "./store/configureStore";
+import AppRouter from "./routers/AppRouter";
+import './firebase/firebase';
+import {startSetProjects} from "./actions/projects";
+
+const store = configureStore();
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <Provider store={store}>
+            <AppRouter/>
+        </Provider>
+    );
 }
+
+
+store.dispatch(startSetProjects());
 
 export default App;
