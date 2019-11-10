@@ -1,20 +1,16 @@
 import React, {useState, useEffect} from 'react';
-import configureStore from "../store/configureStore";
 import {connect} from 'react-redux';
 import {startSetContentTypes} from "../actions/contentTypes";
 import {Link} from "react-router-dom";
-
-let contentTypesLoaded = false;
 
 const ContentTypesList = (props) => {
 
     useEffect(() => {
 
-        if (!contentTypesLoaded && props.projectId) {
+        if (props.projectId) {
             props.dispatch(startSetContentTypes(props.projectId));
-            contentTypesLoaded = true;
         }
-    });
+    }, [props.projectId]);
 
     return (
         <div>
