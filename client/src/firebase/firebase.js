@@ -25,6 +25,4 @@ db.ref('projects').on('value', (snapshot) => {
             ...childSnaphot.val()
         });
     });
-
-    console.log(projects);
 });

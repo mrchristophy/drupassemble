@@ -4,7 +4,6 @@ import {Provider} from "react-redux";
 import configureStore from "./store/configureStore";
 import AppRouter from "./routers/AppRouter";
 import './firebase/firebase';
-import {startSetProjects} from "./actions/projects";
 
 const store = configureStore();
 
@@ -15,8 +14,5 @@ function App() {
         </Provider>
     );
 }
-
-
-store.dispatch(startSetProjects());
 
 export default App;

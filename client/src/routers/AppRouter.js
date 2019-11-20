@@ -6,6 +6,8 @@ import Footer from "../components/global/Footer";
 import LoginPage from "../components/pages/LoginPage";
 import {startGetUser} from "../actions/users";
 import {connect} from "react-redux";
+import ProjectsPage from "../components/pages/ProjectsPage";
+import ContentTypeDetailPage from "../components/pages/ContentTypeDetailPage";
 
 const PrivateRoute = ({component: Component, email, userLoaded, ...rest}) => {
     if (!userLoaded) {
@@ -23,6 +25,22 @@ const PrivateRoute = ({component: Component, email, userLoaded, ...rest}) => {
     }
 };
 
+const AnonymousRoute = ({component: Component, email, userLoaded, ...rest}) => {
+    if (!userLoaded) {
+        return (
+            <div>Please wait...</div>
+        );
+    } else {
+        return (
+            <Route
+                {...rest} render={(props) => email
+                ? <Redirect to={{pathname: '/project', state: {from: props.location}}}/>
+                : <Component {...props} />}
+            />
+        )
+    }
+};
+
 const Routes = (props) => {
 
     useEffect(() => {
@@ -35,8 +53,10 @@ const Routes = (props) => {
             <div>
                 <Header/>
                 <Switch>
-                    <Route path="/" exact={true} component={LoginPage}/>
+                    <AnonymousRoute userLoaded={props.user.userLoaded} email={props.user.email} path="/" exact={true} component={LoginPage}/>
+                    <PrivateRoute userLoaded={props.user.userLoaded} email={props.user.email} path="/project" exact={true} component={ProjectsPage}/>
                     <PrivateRoute userLoaded={props.user.userLoaded} email={props.user.email} path="/project/:id" exact={true} component={ProjectDetailPage}/>
+                    <PrivateRoute userLoaded={props.user.userLoaded} email={props.user.email} path="/content-type/:id" exact={true} component={ContentTypeDetailPage}/>
                 </Switch>
                 <Footer/>
             </div>

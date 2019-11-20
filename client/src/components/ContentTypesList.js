@@ -6,22 +6,22 @@ import {Link} from "react-router-dom";
 const ContentTypesList = (props) => {
 
     useEffect(() => {
-
-        if (props.projectId) {
-            props.dispatch(startSetContentTypes(props.projectId));
-        }
+        props.dispatch(startSetContentTypes(props.projectId));
     }, [props.projectId]);
+
 
     return (
         <div>
-            {props.contentTypes.map((contentType) => {
-                return <div key={contentType.id}>{contentType.title}</div>
+            {props.contentTypes && props.contentTypes.map((contentType) => {
+                return <div key={contentType.id}><Link to={`/content-type/${contentType.id}`}>{contentType.title}</Link></div>
             })}
         </div>
     );
+
 };
 
 const mapStateToProps = (state) => {
+
     return {
         contentTypes: state.contentTypes
     }

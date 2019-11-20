@@ -1,5 +1,5 @@
 import db from '../firebase/firebase';
-import {setProjects} from "./projects";
+import {addProject, setProjects} from "./projects";
 
 export const addContentType = (contentType) => {
     return {
@@ -19,11 +19,16 @@ export const startAddContentType = (contentTypeData = {}) => {
 
         const contentType = {title, projectId, createdAt};
 
-        db.ref('contentTypes').push(contentType).then((ref) => {
-            dispatch(addContentType({
-                id: ref.key,
-                ...contentType
-            }));
+        fetch('/content-types/add', {
+            method: 'POST',
+            headers: new Headers({
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }),
+            body: `title=${title}&createdAt=${createdAt}&projectId=${projectId}`
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            dispatch(addContentType({...contentType, id: data.contentTypeId}))
         });
 
     };
@@ -38,28 +43,41 @@ export const setContentTypes = (contentTypes) => {
 
 export const startSetContentTypes = (projectId) => {
 
-    console.log('projecyIds', projectId);
+    return (dispatch) => {
+        fetch(`/content-types/${projectId}`, {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/x-www-form-urlencoded',
+            })
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            dispatch(setContentTypes(data.contentTypes))
+        });
+    };
+
+};
+
+export const setContentTypeDetail = (contentType) => {
+    return {
+        type: 'SET_CONTENT_TYPE_DETAIL',
+        contentType
+    }
+};
+
+export const startSetContentTypeDetail = (contentTypeId) => {
 
     return (dispatch) => {
-        const contentTypes = [];
-
-
-        db.ref('contentTypes')
-            .orderByChild('projectId')
-            .equalTo(projectId)
-            .once('value')
-            .then((snapshot) => {
-                console.log(snapshot);
-                snapshot.forEach((childSnaphot) => {
-
-                    console.log(childSnaphot.val());
-                    contentTypes.push({
-                        id: childSnaphot.key,
-                        ...childSnaphot.val()
-                    });
-                });
-
-                dispatch(setContentTypes(contentTypes));
-            });
+        fetch(`/content-type-detail/${contentTypeId}`, {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/x-www-form-urlencoded',
+            })
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            dispatch(setContentTypeDetail(data.contentType))
+        });
     };
+
 };

@@ -46,6 +46,7 @@ export const startLoginUser = (credentialsData = {}) => {
         }).then((response) => {
             return response.json();
         }).then((data) => {
+
             dispatch(loginUser({
                 email: data.email
             }))
