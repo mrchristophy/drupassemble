@@ -1,6 +1,3 @@
-import db from '../firebase/firebase';
-import {getUser} from "./users";
-
 export const addProject = (project) => {
     return {
         type: 'ADD_PROJECT',

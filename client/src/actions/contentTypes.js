@@ -1,6 +1,3 @@
-import db from '../firebase/firebase';
-import {addProject, setProjects} from "./projects";
-
 export const addContentType = (contentType) => {
     return {
         type: 'ADD_CONTENT_TYPE',

@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {startSetContentTypeDetail} from "../../actions/contentTypes";
+import FieldAddForm from "../FieldAddForm";
 
 const ContentTypeDetailPage = (props) => {
 
@@ -11,6 +12,7 @@ const ContentTypeDetailPage = (props) => {
     return (
         <div>
             <h2>{props.contentType.title}</h2>
+            <FieldAddForm/>
         </div>
     );
 
