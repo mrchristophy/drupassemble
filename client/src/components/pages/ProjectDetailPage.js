@@ -10,6 +10,8 @@ const ProjectDetailPage = (props) => {
         props.dispatch(startSetProjectDetail(props.projectId));
     }, [props.projectId]);
 
+    console.log(props);
+
     return (
         <div>
             <h2>{props.project && props.project.title}</h2>

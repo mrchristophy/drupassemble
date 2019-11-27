@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import Select from 'react-select';
+import FieldTextForm from "./fields/FieldTextForm";
 
 const FieldAddForm = (props) => {
 
@@ -11,16 +12,20 @@ const FieldAddForm = (props) => {
 
     const [selectedOption, setSelectedOption] = useState(null);
 
-    const handleChange = (selectedOption) => {
-        setSelectedOption(selectedOption);
+    const onHandleChange = (selectedOption) => {
+        setSelectedOption(selectedOption.value);
     };
 
+
     return (
-        <div><Select
-            value={selectedOption}
-            onChange={handleChange}
-            options={options}
-        /></div>
+        <div>
+            <Select
+                value={selectedOption}
+                onChange={onHandleChange}
+                options={options}
+            />
+            {selectedOption === 'text' && <FieldTextForm setSelectedOption={setSelectedOption}/>}
+        </div>
     );
 
 };

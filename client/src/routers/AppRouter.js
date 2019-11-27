@@ -26,6 +26,9 @@ const PrivateRoute = ({component: Component, email, userLoaded, ...rest}) => {
 };
 
 const AnonymousRoute = ({component: Component, email, userLoaded, ...rest}) => {
+
+    console.log(email);
+
     if (!userLoaded) {
         return (
             <div>Please wait...</div>

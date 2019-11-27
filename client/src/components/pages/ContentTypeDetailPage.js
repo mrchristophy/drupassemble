@@ -13,6 +13,13 @@ const ContentTypeDetailPage = (props) => {
         <div>
             <h2>{props.contentType.title}</h2>
             <FieldAddForm/>
+
+            {props.fields.map((field, index) => {
+                return (
+                    <div key={index}>{field.label}</div>
+                )
+            })}
+
         </div>
     );
 
@@ -21,7 +28,8 @@ const ContentTypeDetailPage = (props) => {
 const mapStateToProps = (state, props) => {
     return {
         contentTypeId: props.match.params.id,
-        contentType: state.contentType
+        contentType: state.contentType,
+        fields: state.fields
     }
 };
 
